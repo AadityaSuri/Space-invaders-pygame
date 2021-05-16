@@ -1,7 +1,8 @@
 import pygame
-import time
 import random
-import os
+import math
+
+score = 0
 
 #screen
 width = 750
@@ -47,6 +48,13 @@ def firePBullet(x, y):
     global pBulletState
     pBulletState = "fire"
     screen.blit(playerBullet,(x + 80, y + 25))
+
+def isCollision(bulletX, bulletY, enemyX, enemyY):
+    distance = math.sqrt(pow(bulletX - enemyX, 2) + pow(bulletY - enemyY, 2))
+    if distance <= 50:
+        return True
+    else:
+        return False
 
 #event loop
 
@@ -95,6 +103,16 @@ while running:
     if pBulletState == "fire":
         firePBullet(pBulletX, pBulletY)
         pBulletY -= pBulletY_change
+
+    #collision
+    collision = isCollision(pBulletX, pBulletY, enemyX, enemyY)
+    if collision:
+        pBulletY = 600
+        pBulletState = "ready"
+        score += 1
+        print(score)
+        enemyX = random.randint(-20, width - 130)
+        enemyY = random.randint(0, 100)
 
     player(playerX, playerY)
     enemy(enemyX, enemyY)

@@ -160,7 +160,6 @@ while running:
             pBulletY = 600
             pBulletState = "ready"
             score += 1
-            #print(score)
             enemyX[i] = random.randint(-20, width - 130)
             enemyY[i] = random.randint(0, 100)
 
